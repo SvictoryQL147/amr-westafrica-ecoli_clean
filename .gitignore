@@ -1,0 +1,7 @@
+data/raw/
+*.fna
+*.fasta
+*.png
+*.pdf
+*.zip
+*.gz

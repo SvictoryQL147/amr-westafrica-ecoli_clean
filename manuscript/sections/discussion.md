@@ -1,0 +1,35 @@
+﻿## 4. DISCUSSION
+
+### 4.1 Summary of key findings
+
+This study presents the first comprehensive resistome analysis and ML‑based MDR prediction of *Escherichia coli* genome assemblies from West Africa, incorporating 235 publicly available assemblies from Nigeria (n=185) and Ghana (n=50). Key findings include the dominance of beta‑lactam resistance (blaTEM, 55.3%), high prevalence of sulfonamide (sul2, 48.5%) and fluoroquinolone (qnrS, 26.8%) resistance determinants, detection of carbapenem resistance gene blaNDM‑1 in two isolates (0.9%), and an independent AMRFinderPlus‑derived MDR prevalence of 52.8% (124/235). Random Forest achieved a mean ROC‑AUC of 0.954 (±0.011) and accuracy of 0.915 (±0.013), demonstrating strong predictive performance without circularity.
+
+### 4.2 Resistome landscape in global context
+
+The high prevalence of blaTEM (55.3%) is consistent with global reports where blaTEM variants represent the most widely disseminated acquired resistance genes in *E. coli* [CITE: Paterson & Bonomo 2005]. Detection of blaCTX‑M in 4.3% of isolates is of particular clinical concern given the reliance on third‑generation cephalosporins as first‑line therapy in Nigerian healthcare settings [CITE: Labi et al. 2018]. The co‑prevalence of sul2 (48.5%) and qnrS (26.8%) suggests co‑selection pressure from both sulfonamide and fluoroquinolone use in the community, consistent with reports of non‑prescription antimicrobial dispensing across West Africa [CITE: Ayobami et al. 2022].
+
+The detection of blaNDM‑1 in two Nigerian isolates represents a significant public health finding. NDM‑1 carbapenemase confers resistance to carbapenems — antibiotics of last resort — and its presence in community‑derived West African isolates echoes reports from other sub‑Saharan African countries [CITE: Nordmann et al. 2011]. Although detected at low prevalence (0.9%), the presence of blaNDM‑1 warrants urgent enhanced surveillance, as carbapenem‑resistant Enterobacteriaceae (CRE) are associated with mortality rates exceeding 40% in resource‑limited settings.
+
+### 4.3 MDR prevalence and country‑level differences
+
+Using independent AMRFinderPlus labels, overall MDR prevalence was 52.8% (124/235). This is higher than the 22.6% obtained from our own k‑mer screening, reflecting the greater sensitivity of AMRFinderPlus and its inclusion of a broader range of resistance genes. The MDR rate was notably higher in Ghanaian isolates (36.0% using our k‑mer screening, and proportionally higher using AMRFinderPlus) compared to Nigerian isolates (18.9% using k‑mer screening). This suggests a genuine epidemiological difference, although it may also reflect differences in clinical source, prescribing practices, or sampling bias — Ghanaian assemblies were exclusively from one study using Illumina MiSeq, indicating a possible single‑cohort effect. Future studies incorporating longitudinal and multi‑site sampling would clarify whether this represents a true epidemiological difference.
+
+### 4.4 ML model performance and interpretability
+
+Both Random Forest and XGBoost classifiers achieved strong performance with mean ROC‑AUC values of 0.954 (±0.011) and 0.954 (±0.009), respectively, under stratified 5‑fold cross‑validation. These values are in line with previous ML‑based AMR prediction studies [CITE: Moradigaravand et al. 2018; Nguyen et al. 2019] and indicate excellent discriminative ability. SHAP analysis confirmed that blaTEM, sul2, and qnrS contributed most to MDR predictions, corroborating their high prevalence and roles as markers of multi‑class resistance. The interpretability afforded by SHAP values is of particular value for clinical translation, providing actionable insight into which resistance genes drive MDR classification in this population.
+
+### 4.5 Independence of MDR labels – addressing circularity
+
+A key methodological strength of this study is the use of independent MDR labels from NCBI AMRFinderPlus. When MDR was defined using the same k‑mer screening panel that provided the features, the classifiers achieved a perfect ROC‑AUC of 1.000 — a mathematical tautology rather than true prediction. By switching to AMRFinderPlus‑derived labels (which use a different algorithm and reference database), the AUC dropped to a realistic 0.954, demonstrating that the strong genotypic signal is genuine and not an artifact of circularity. This approach aligns with best practices in ML for AMR and ensures that our reported performance reflects true generalisable predictive power.
+
+### 4.6 Genomic surveillance gap
+
+Perhaps the most striking finding is not in the resistome data itself but in what is absent from global databases. The complete absence of publicly deposited *E. coli* WGS data from Senegal and Cameroon, and the limited representation of Nigeria (185 assemblies from a country of over 200 million people), highlights a profound genomic surveillance inequality. Existing global AMR models trained predominantly on European and North American data are unlikely to generalise to West African pathogen populations, which carry distinct resistance gene repertoires shaped by local selective pressures. Addressing this gap requires sustained investment in sequencing infrastructure, bioinformatics capacity building, and data‑sharing frameworks across the region.
+
+### 4.7 Limitations
+
+This study has several limitations. First, metadata completeness was variable — clinical source, patient demographics, and phenotypic MIC data were not available for most isolates. Second, resistance gene detection used k‑mer based sequence matching, which may under‑detect novel gene variants with significant sequence divergence; future analyses should incorporate full BLAST‑based or HMM‑based screening using the complete CARD database. Third, the dataset likely does not fully represent circulating West African *E. coli* diversity. Fourth, while we used independent AMRFinderPlus labels to avoid circularity, these labels themselves are predicted rather than measured phenotypically; external validation with phenotypic MIC data would further strengthen the conclusions. Fifth, the ML models require external validation on independent West African cohorts to confirm generalisability.
+
+### 4.8 Conclusions
+
+This study provides the first genomic characterisation and ML‑based MDR prediction of *E. coli* from West Africa using independent gold standard labels, revealing a resistome dominated by beta‑lactam, sulfonamide, and fluoroquinolone resistance determinants, with evidence of emerging carbapenem resistance. ML classifiers trained on a compact 21‑gene panel achieved a realistic ROC‑AUC of 0.954, demonstrating that resistance gene profiles can predict MDR without circularity and supporting the potential for WGS‑based surveillance in resource‑limited settings. The severe underrepresentation of West African genomic data in public databases underscores an urgent need for investment in regional sequencing and bioinformatics capacity.
